@@ -18,7 +18,9 @@ public interface EmployeeRepository extends MongoRepository<Employee,String>{
 
     public List<Employee> findAllByManagerId(String id);
 
-    //public List<Employee> findAllByManagerIdAndYearOfExperienceGreater(String id, Integer yearOfExperience);
-
     public List<Employee> findAllByManagerIdAndYearOfExperienceGreaterThanEqual(String id, Integer yearOfExperience);
+
+    public List<Employee> findAllByDesignationAndDepartment(String string, String department);
+
+    public List<Employee> findAllByDepartment(String department);
 }
