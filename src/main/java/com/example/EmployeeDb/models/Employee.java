@@ -1,6 +1,6 @@
 package com.example.EmployeeDb.models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -28,15 +28,15 @@ public class Employee {
     @Size(min = 10, max = 10,message = "mobile number should contain exactly 10 digits")
     private String mobile;
     private String location;
-    private Date dateOfJoining;
-    private Date createdTime;
-    private Date updatedTime;
+    private LocalDateTime dateOfJoining;
+    private LocalDateTime createdTime;
+    private LocalDateTime updatedTime;
     private String managerId;
     private int yearOfExperience; 
 
     
     public Employee(String id, String name, String designation, String email, String department,
-            String mobile, String location, String managerId,Date dateOfJoining) {
+            String mobile, String location, String managerId,LocalDateTime dateOfJoining) {
         this.id = id;
         this.name = name;
         this.dateOfJoining = dateOfJoining;
@@ -60,10 +60,10 @@ public class Employee {
     public void setName(String name) {
         this.name = name;
     }
-    public Date getDateOfJoining() {
+    public LocalDateTime getDateOfJoining() {
         return dateOfJoining;
     }
-    public void setDateOfJoining(Date dateOfJoining) {
+    public void setDateOfJoining(LocalDateTime dateOfJoining) {
         this.dateOfJoining = dateOfJoining;
     }
     public String getDesignation() {
@@ -109,19 +109,19 @@ public class Employee {
     public void setYearOfExperience(int yearOfExperience) {
         this.yearOfExperience = yearOfExperience;
     }
-    public Date getCreatedTime() {
+    public LocalDateTime getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
+    public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
     }
 
-    public Date getUpdatedTime() {
+    public LocalDateTime getUpdatedTime() {
         return updatedTime;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
+    public void setUpdatedTime(LocalDateTime updatedTime) {
         this.updatedTime = updatedTime;
     }
 

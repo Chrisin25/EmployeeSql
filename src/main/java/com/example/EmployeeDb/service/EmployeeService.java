@@ -1,10 +1,9 @@
 package com.example.EmployeeDb.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -94,8 +93,7 @@ public class EmployeeService {
             Employee newManager=employeeRepository.findAllById(employeeId.get("managerId"));
             e.setManagerId(employeeId.get("managerId"));
             e.setDepartment(newManager.getDepartment());
-            Date today=new Date();
-            e.setUpdatedTime(today);
+            e.setUpdatedTime(LocalDateTime.now());
             employeeRepository.save(e);
             result.put("message ",""+ e.getName()+"'s manager has been successfully changed from "+previousManager.getName()+" to "+employeeRepository.findAllById(employeeId.get("managerId")).getName()+".");
            }
@@ -123,7 +121,7 @@ public class EmployeeService {
 //ADD
 public ResponseEntity <Map<String,String>> addEmployeesService(Employee employee){
     Map<String,String> result=new HashMap<>();
-    LocalDate dateOfJoin=employee.getDateOfJoining().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate dateOfJoin=employee.getDateOfJoining().toLocalDate();
     //calculate year of experience
     employee.setYearOfExperience(Period.between(dateOfJoin, LocalDate.now()).getYears());
     
@@ -148,8 +146,7 @@ public ResponseEntity <Map<String,String>> addEmployeesService(Employee employee
         return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
     }
     //add to db
-    Date today=new Date();
-    employee.setCreatedTime(today);
+    employee.setCreatedTime(LocalDateTime.now());
     
         employeeRepository.save(employee);
         result.put("message ","successfully created");
