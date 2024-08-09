@@ -17,9 +17,9 @@ public interface EmployeeRepository extends MongoRepository<Employee,String>{
     @Query("{designation:'Account Manager'}")
     public List<Employee> findManagers();
 
-    @Query(value="{'managerId':?0}",fields="{'name':1,'id':1,'designation':1,'department':1,'email':1,'mobile':1,'location':1,'dateOfJoining':1,'createdTime':1,'updatedTime':1}")
+    
     public List<EmployeeProjection> findAllByManagerId(String id);
-    @Query(fields="{'name':1,'id':1,'designation':1,'department':1,'email':1,'mobile':1,'location':1,'dateOfJoining':1,'createdTime':1,'updatedTime':1}")
+    
     public List<EmployeeProjection> findAllByManagerIdAndYearOfExperienceGreaterThanEqual(String id, Integer yearOfExperience);
 
     public List<Employee> findAllByDesignationAndDepartment(String string, String department);

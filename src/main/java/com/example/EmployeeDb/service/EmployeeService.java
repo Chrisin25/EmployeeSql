@@ -152,6 +152,7 @@ public ResponseEntity <Map<String,String>> addEmployeesService(Employee employee
     }
     //add to db
     employee.setCreatedTime(LocalDateTime.now());
+    employee.setUpdatedTime(LocalDateTime.now());
     
         employeeRepository.save(employee);
         result.put("message ","successfully created");
