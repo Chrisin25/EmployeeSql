@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.EmployeeDb.models.Employee;
 import com.example.EmployeeDb.repository.EmployeeRepository;
+import com.example.EmployeeDb.repository.projection.EmployeeProjection;
 
 @Service
 public class EmployeeService {
@@ -64,7 +65,7 @@ public class EmployeeService {
             employeeManager.put("departement", manager.getDepartment());
             employeeManager.put("id",manager.getId());
             //list of employees under the manager
-            List<Employee> employeeList;
+            List<EmployeeProjection> employeeList;
             if(yearOfExperience==null){
                 employeeList=employeeRepository.findAllByManagerId(manager.getId());
             }
