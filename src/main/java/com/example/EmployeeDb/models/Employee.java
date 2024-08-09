@@ -11,6 +11,8 @@ import org.springframework.data.annotation.Id;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Document("Employee")
 public class Employee {
@@ -28,6 +30,7 @@ public class Employee {
     @Size(min = 10, max = 10,message = "mobile number should contain exactly 10 digits")
     private String mobile;
     private String location;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime dateOfJoining;
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;

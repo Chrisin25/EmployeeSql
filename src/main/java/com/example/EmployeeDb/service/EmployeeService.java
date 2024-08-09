@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -117,13 +118,17 @@ public class EmployeeService {
         
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
-
+    private static final AtomicInteger GENERATE_ID=new AtomicInteger(100);
+   
 //ADD
 public ResponseEntity <Map<String,String>> addEmployeesService(Employee employee){
     Map<String,String> result=new HashMap<>();
     LocalDate dateOfJoin=employee.getDateOfJoining().toLocalDate();
     //calculate year of experience
     employee.setYearOfExperience(Period.between(dateOfJoin, LocalDate.now()).getYears());
+    //Generate id
+    int newId=GENERATE_ID.getAndIncrement();
+    employee.setId(String.valueOf(newId));
     
     //manager id validation
     if(Integer.parseInt(employee.getId())<=0 && employee.getDesignation()!="Account Manager"){
