@@ -96,7 +96,8 @@ public class EmployeeService {
             e.setDepartment(newManager.getDepartment());
             e.setUpdatedTime(LocalDateTime.now());
             employeeRepository.save(e);
-            result.put("message ",""+ e.getName()+"'s manager has been successfully changed from "+previousManager.getName()+" to "+employeeRepository.findAllById(employeeId.get("managerId")).getName()+".");
+            result.put("message ",""+ e.getName()+"'s manager has been successfully changed from "
+            +previousManager.getName()+" to "+newManager.getName()+".");
            }
            
            catch(NullPointerException n){
@@ -118,7 +119,7 @@ public class EmployeeService {
         
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
-    private static final AtomicInteger GENERATE_ID=new AtomicInteger(100);
+    private static final AtomicInteger GENERATE_ID=new AtomicInteger(105);
    
 //ADD
 public ResponseEntity <Map<String,String>> addEmployeesService(Employee employee){
