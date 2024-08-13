@@ -30,12 +30,12 @@ public class EmployeeService {
         Employee e= employeeRepository.findAllById(id);//throws exception when employee not found
         if(e.getDesignation().matches("Account Manager")){
             
-            if(employeeRepository.findAllByManagerId(id)==null){
+            if(employeeRepository.findAllByManagerId(id).isEmpty()){
                 result.put("message","Successfully deleted "+e.getName()+" from employee list of the organization");
                 employeeRepository.deleteById(id); 
             }
             else{
-                result.put("message","Cannot delete employee");
+                result.put("message","Cannot delete manager");
             }
         }
         else{
