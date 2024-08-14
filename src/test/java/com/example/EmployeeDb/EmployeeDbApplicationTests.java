@@ -8,6 +8,7 @@ class EmployeeDbApplicationTests {
 
 	@Test
 	void contextLoads() {
+		EmployeeDbApplication.main(new String[] {});
 	}
 
 }

@@ -107,10 +107,6 @@ public class EmployeeService {
         }
 
         }
-        catch(IllegalArgumentException i){
-            result.put("message ","Enter valid id");
-            return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
-        }
         catch(NullPointerException n){
             System.out.println(n);
             result.put("message ","Employee not found");
@@ -131,16 +127,6 @@ public ResponseEntity <Map<String,String>> addEmployeesService(Employee employee
     int newId=GENERATE_ID.getAndIncrement();
     employee.setId(String.valueOf(newId));
     
-    //manager id validation
-    if(Integer.parseInt(employee.getId())<=0 && employee.getDesignation()!="Account Manager"){
-        result.put("message ","Invalid Id");
-        return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
-    }
-    //check if id exist
-    if(employeeRepository.existsById(employee.getId())){
-        result.put("message ","Employee id already exist");
-        return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
-    }
     List<Employee> managerList=employeeRepository.findAllByDesignationAndDepartment("Account Manager",employee.getDepartment());
     if(!managerList.isEmpty() && employee.getDesignation().matches("Account Manager")){
         result.put("message ","Manager already exist");
