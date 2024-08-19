@@ -2,7 +2,7 @@ package com.example.EmployeeDb.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import org.junit.jupiter.api.Test;
 
@@ -34,14 +34,14 @@ public class EmployeeTest {
     @Test
     public void TestgetCreatedTime(){
         Employee e=new Employee();
-        LocalDateTime dateNow=LocalDateTime.now();
+        OffsetDateTime dateNow=OffsetDateTime.now();
         e.setCreatedTime(dateNow);
         assertEquals(dateNow, e.getCreatedTime());
     }
     @Test
     public void TestgetUpdatedTime(){
         Employee e=new Employee();
-        LocalDateTime dateNow=LocalDateTime.now();
+        OffsetDateTime dateNow=OffsetDateTime.now();
         e.setUpdatedTime(dateNow);
         assertEquals(dateNow, e.getUpdatedTime());
     }

@@ -34,9 +34,9 @@ public class EmployeeControllerTest {
 
         when(employeeService.addEmployeesService(Mockito.any(Employee.class)))
                 .thenReturn(ResponseEntity.ok(response));
-                mockMvc.perform(post("/AddEmployee")
+        mockMvc.perform(post("/AddEmployee")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"John Doe\",\"designation\":\"Associate\",\"email\":\"john@aspire.com\",\"department\":\"BA\",\"mobile\":\"1234567890\",\"location\":\"Kochi\",\"managerId\":\"0\",\"dateOfJoining\": \"2023-06-28T12:57:59.447\"}"))
+                .content("{\"name\":\"John Doe\",\"designation\":\"Associate\",\"email\":\"john@aspire.com\",\"department\":\"BA\",\"mobile\":\"1234567890\",\"location\":\"Kochi\",\"managerId\":\"0\",\"dateOfJoining\": \"2018-06-28T12:57:59.447+00:00\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Employee added successfully"));
     }
@@ -58,7 +58,7 @@ public class EmployeeControllerTest {
         Map<String, Object> response = new HashMap<>();
         response.put("employees", new ArrayList<>());
 
-        when(employeeService.getemployeecontroller(Mockito.anyInt(), Mockito.anyString()))
+        when(employeeService.getemployeecontroller(Mockito.anyLong(), Mockito.anyString()))
                 .thenReturn(response);
 
         mockMvc.perform(get("/ViewEmployee")

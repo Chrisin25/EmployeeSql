@@ -1,12 +1,11 @@
-package com.example.EmployeeDb.repository;
-
+package com.example.EmployeeDb.repository.sql;
+import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 import com.example.EmployeeDb.models.Employee;
 
-public interface EmployeeRepository{
-
-    public Employee findById(String id);
+public interface MySqlRepo extends JpaRepository<Employee,String>{
+    public Employee findAllById(String id);
     
     public List<Employee> findByDesignation(String designation);
 
@@ -20,5 +19,5 @@ public interface EmployeeRepository{
 
     public void deleteById(String id);
 
-    public void save(Employee e);
+    
 }
