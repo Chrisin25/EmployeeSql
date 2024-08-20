@@ -32,7 +32,7 @@ public class EmployeeServiceTest {
     @InjectMocks
     EmployeeService employeeService;   
     
-    @Test
+@Test
 public void whenDeleteNonManagerEmployee_thenSuccess() {
     String employeeId = "emp123";
     Employee employee = new Employee();
@@ -78,18 +78,16 @@ public void testDeleteEmployeeService_NotFound() {
  
 @Test
 public void testDeleteEmployeeService_ManagerWithSubordinates() {
-    // Arrange
+    
     String managerId = "1";
     Employee manager = new Employee(managerId , "John Doe", "Account Manager","john@aspire.com","BA","1234567890","Kochi","0",OffsetDateTime.now());
-    Employee subordinateProjection = mock(Employee.class); // Create a mock projection
-    List<Employee> subordinates = Collections.singletonList(subordinateProjection);
+    Employee subordinate = mock(Employee.class); // Create a mock projection
+    List<Employee> subordinates = Collections.singletonList(subordinate);
     when(employeeRepository.findById(managerId)).thenReturn(manager);
     when(employeeRepository.findAllByManagerId(managerId)).thenReturn(subordinates); // Return the mock projection list
 
-    // Act
     ResponseEntity<Map<String, String>> response = employeeService.DeleteEmployeeService(managerId);
 
-    // Assert
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals("Cannot delete manager", response.getBody().get("message"));
     verify(employeeRepository, never()).deleteById(toString());
@@ -97,75 +95,67 @@ public void testDeleteEmployeeService_ManagerWithSubordinates() {
     }
     @Test
     public void testGetEmployeeWithNullManagerId() {
-        // Arrange
+        
         long yearOfExperience = 5;
         String managerId = null;
         List<Employee> managers = Arrays.asList(new Employee(managerId , "John Doe", "Account Manager","john@aspire.com","BA","1234567890","Kochi","0",OffsetDateTime.now()));
         when(employeeRepository.findByDesignation("Account Manager")).thenReturn(managers);
         when(employeeRepository.findAllByManagerId("1")).thenReturn(Arrays.asList(/* employees */ ));
 
-        // Act
         Map<String, Object> result = employeeService.getemployeecontroller(yearOfExperience, managerId);
 
-        // Assert
         assertNotNull(result);
         assertEquals("succesfuly fetched", result.get("message"));
-        // Add more assertions here
+        
     }
     @Test
     public void testGetEmployeeWithNullYearOfExperience() {
-        // Arrange
+       
         Long yearOfExperience = null;
         String managerId = "1";
         List<Employee> managers = Arrays.asList(new Employee(managerId , "John Doe", "Account Manager","john@aspire.com","BA","1234567890","Kochi","0",OffsetDateTime.now()));
         when(employeeRepository.findByDesignation("Account Manager")).thenReturn(managers);
         when(employeeRepository.findAllByManagerId("1")).thenReturn(Arrays.asList(/* employees */ ));
 
-        // Act
         Map<String, Object> result = employeeService.getemployeecontroller(yearOfExperience, managerId);
 
-        // Assert
         assertNotNull(result);
         assertEquals("succesfuly fetched", result.get("message"));
-        // Add more assertions here
+        
     }
     @Test
     public void testGetEmployeeWithNullManagerAndYearOfExperience() {
-        // Arrange
+       
         Long yearOfExperience = null;
         String managerId = null;
         List<Employee> managers = Arrays.asList(new Employee("1" , "John Doe", "Account Manager","john@aspire.com","BA","1234567890","Kochi","0",OffsetDateTime.now()));
         when(employeeRepository.findByDesignation("Account Manager")).thenReturn(managers);
         when(employeeRepository.findAllByManagerId("1")).thenReturn(Arrays.asList(/* employees */ ));
 
-        // Act
         Map<String, Object> result = employeeService.getemployeecontroller(yearOfExperience, managerId);
 
-        // Assert
         assertNotNull(result);
         assertEquals("succesfuly fetched", result.get("message"));
-        // Add more assertions here
+        
     }
     @Test
     public void testGetEmployeeWithManagerIdAndYearOfExperience() {
-        // Arrange
+        
         long yearOfExperience = 2;
         String managerId = "1";
         List<Employee> managers = Arrays.asList(new Employee(managerId , "John Doe", "Account Manager","john@aspire.com","BA","1234567890","Kochi","0",OffsetDateTime.now()));
         
         when(employeeRepository.findByDesignation("Account Manager")).thenReturn(managers);
         
-        // Act
         Map<String, Object> result = employeeService.getemployeecontroller(yearOfExperience, managerId);
 
-        // Assert
         assertNotNull(result);
         assertEquals("succesfuly fetched", result.get("message"));
-        // Add more assertions here
+        
     }
     @Test
 public void testUpdateService_Successful() {
-    // Arrange
+    
     Map<String, String> employeeId = new HashMap<>();
     employeeId.put("employeeId", "1");
     employeeId.put("managerId", "3");
@@ -190,11 +180,8 @@ public void testUpdateService_Successful() {
     when(employeeRepository.findById("2")).thenReturn(mockoldManager);
     when(employeeRepository.findById("3")).thenReturn(mockNewManager);
 
-    // Act
     ResponseEntity<Map<String, String>> response = employeeService.UpdateService(employeeId);
     
-
-    // Assert
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertTrue(response.getBody().containsKey("message "));
     assertTrue(response.getBody().get("message ").contains("John Doe's manager has been successfully changed from"));
@@ -202,7 +189,7 @@ public void testUpdateService_Successful() {
 
 @Test
 public void testUpdateService_EmployeeNotFound() {
-    // Arrange
+    
     Map<String, String> employeeId = new HashMap<>();
     employeeId.put("employeeId", "invalidEmployeeId");
 
@@ -216,7 +203,7 @@ public void testUpdateService_EmployeeNotFound() {
 
 @Test
 public void testUpdateService_ManagerNotFound() {
-    // Arrange
+   
     Map<String, String> employeeId = new HashMap<>();
     employeeId.put("employeeId", "validEmployeeId");
     employeeId.put("managerId", "invalidManagerId");
@@ -256,7 +243,6 @@ public void testAddManagerService_ManagerExist(){
 @Test
 public void testAddAssociateService_DepartmentNotExist(){
     Employee employee = new Employee("1" , "John Doe", "Associate","john@aspire.com","BA","1234567890","Kochi","0",OffsetDateTime.now());
-    //Employee employee2 = new Employee("2" , "Jo Doe", "Account Manager","john@aspire.com","sales","1234567890","Kochi","0",OffsetDateTime.now());
     when(employeeRepository.findAllByDepartment( "BA")).thenReturn(List.of());
     ResponseEntity<Map<String, String>> response=employeeService.addEmployeesService(employee);
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -322,6 +308,3 @@ public void test_getEmployeesByManagerIdAndYearOfExperience(){
         assertEquals(expectedDTO.getId(), actualDTO.getId());
     }
 }
-
-
-

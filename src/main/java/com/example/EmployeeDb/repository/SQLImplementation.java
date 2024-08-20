@@ -1,4 +1,4 @@
-package com.example.EmployeeDb.repository.sql;
+package com.example.EmployeeDb.repository;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.example.EmployeeDb.models.Employee;
-import com.example.EmployeeDb.repository.EmployeeRepository;
 
 @Repository
 @Component

@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,12 +31,9 @@ public class EmployeeService {
 
             if(employeeRepository.findAllByManagerId(id).isEmpty()){
                 result.put("message","Successfully deleted "+e.getName()+" from employee list of the organization");
-                try{
+                
                     employeeRepository.deleteById(id); 
-                } catch(Exception e1){
-                    System.out.println("new exception found  :   "+e);
-                    return new ResponseEntity<>(result,HttpStatus.OK);
-                }
+                
                 
             }
             else{
@@ -46,12 +42,10 @@ public class EmployeeService {
         }
         else{
             result.put("message","Successfully deleted "+e.getName()+" from employee list of the organization");
-            try{
+            
                 employeeRepository.deleteById(id); 
-            } catch(Exception e1){
-                System.out.println("new exception found  :   "+e);
                 return new ResponseEntity<>(result,HttpStatus.OK);
-            }
+            
             
         }
         return new ResponseEntity<>(result,HttpStatus.OK);
@@ -77,7 +71,7 @@ public class EmployeeService {
             employeeManager.put("departement", manager.getDepartment());
             employeeManager.put("id",manager.getId());
             //list of employees under the manager
-            try{
+            
             List<EmployeeDTO> employeeList;
             if(yearOfExperience==null){
                
@@ -88,10 +82,8 @@ public class EmployeeService {
             }
             employeeManager.put("employeeList",employeeList);
             detailList.add(employeeManager); 
-            }
-            catch(Exception e2){
-                System.out.println("new exception found  :   "+e2);
-            }
+            
+            
             
             }
         }
@@ -115,17 +107,11 @@ public class EmployeeService {
             e.setManagerId(employeeId.get("managerId"));
             e.setDepartment(newManager.getDepartment());
             e.setUpdatedTime(OffsetDateTime.now());
-            try{
+            
                 employeeRepository.save(e);
-            }
-            catch(Exception e2){
-                System.out.println("new exception found  :   "+e2);  ///
-                
-            }
-            finally{
             result.put("message ",""+ e.getName()+"'s manager has been successfully changed from "
             +previousManager.getName()+" to "+newManager.getName()+".");
-            }
+            
            }
            
            catch(NullPointerException n){
@@ -179,22 +165,17 @@ public ResponseEntity <Map<String,String>> addEmployeesService(Employee employee
         return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
     }
     }
-    else{
+    /*else{
         if(!employee.getDesignation().matches("Account Manager")){
             result.put("message ","cannot add employee to this department");
             return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
         }
-    }
+    }*/
     //add to db
     employee.setCreatedTime(OffsetDateTime.now());
     employee.setUpdatedTime(OffsetDateTime.now());
-    try{
-        employeeRepository.save(employee);
-    }
-    catch(DataAccessResourceFailureException e) {
-        System.out.println("exception: "+e);
     
-    }
+        employeeRepository.save(employee);
         result.put("message ","successfully created");
    
     
