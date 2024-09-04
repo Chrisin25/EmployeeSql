@@ -49,7 +49,7 @@ public class EmployeeControllerTest {
                 .thenReturn(ResponseEntity.ok(response));
 
         mockMvc.perform(delete("/remove")
-                .param("id", "123"))
+                .param("employeeId", "123"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Employee deleted successfully"));
     }
@@ -58,8 +58,7 @@ public class EmployeeControllerTest {
         Map<String, Object> response = new HashMap<>();
         response.put("employees", new ArrayList<>());
 
-        when(employeeService.getemployeecontroller(Mockito.anyLong(), Mockito.anyString()))
-                .thenReturn(response);
+        when(employeeService.getEmployeeService(Mockito.anyLong(), Mockito.anyString())).thenReturn(ResponseEntity.ok(response));
 
         mockMvc.perform(get("/ViewEmployee")
                 .param("year-of-experience", "5")

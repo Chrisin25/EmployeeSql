@@ -36,16 +36,16 @@ public class EmployeeController {
     }
     
     @GetMapping("/ViewEmployee")
-    public Map<String,Object> getemployeecontroller(
+    public ResponseEntity <Map<String,Object>> getemployeecontroller(
     @RequestParam(value = "year-of-experience", required = false) Long yearOfExperience,
     @RequestParam(value = "managerId", required = false) String managerId
     ){
-        return employeeService.getemployeecontroller(yearOfExperience, managerId);
+        return employeeService.getEmployeeService(yearOfExperience, managerId);
     }
     
     @DeleteMapping("/remove")
-    ResponseEntity <Map<String,String>> DeleteEmployeeController(@RequestParam String id) {
-        return employeeService.DeleteEmployeeService(id);
+    ResponseEntity <Map<String,String>> DeleteEmployeeController(@RequestParam String employeeId) {
+        return employeeService.DeleteEmployeeService(employeeId);
         
     }   
     
